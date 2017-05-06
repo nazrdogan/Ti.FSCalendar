@@ -2,12 +2,17 @@ var CGRectMake = require('CoreGraphics').CGRectMake,
     UIColor = require('UIKit/UIColor'),
     UIScreen = require('UIKit/UIScreen'),
     NSDate = require('Foundation/NSDate');
+NSDateFormatter = require('Foundation/NSDateFormatter'),
 FSCalendar = require("FSCalendar/FSCalendar");
 
 var FSCalendarDelegate = Hyperloop.defineClass('FSCalendarDelegate', 'NSObject');
 
 var calendar = new FSCalendar();
 var bounds = UIScreen.mainScreen.bounds;
+var dateFormatter;
+dateFormatter = NSDateFormatter.alloc().init();
+dateFormatter.dateFormat = "yyyy-MM-dd";
+
 
 calendar.frame = CGRectMake(30, 50, 300, 300);
 
@@ -29,36 +34,23 @@ FSCalendarDelegate.addMethod({
     callback : function(calendar, date, position) {
         if (this.didSelectDate) {
             Ti.API.info(calendar);
-            this.didSelectDate(calendar, date,position);
+            this.didSelectDate(calendar, date, position);
         }
     }
 });
 FSCalendarDelegate.addMethod({
-    selector : 'calendar:shouldSelectDate:',
+    selector : 'calendar:shouldSelectDate:atMonthPosition:',
     instance : true,
     returnType : 'BOOL',
     arguments : ['FSCalendar', 'NSDate', 'FSCalendarMonthPosition'],
     callback : function(calendar, date, position) {
-         Ti.API.info("shouldSelectDate"); 
-        
+        Ti.API.info("shouldSelectDate");
+
         if (this.shouldSelectDate) {
             return this.shouldSelectDate(calendar, date, position);
         }
-         
-       // return false;
-    }
-});
-FSCalendarDelegate.addMethod({
-    selector : 'calendar:shouldSelect:',
-    instance : true,
-    returnType : 'BOOL',
-    arguments : ['FSCalendar', 'NSDate', 'FSCalendarMonthPosition'],
-    callback : function(calendar, date, position) {
-        
-        if (this.shouldSelect) {
-            return this.shouldSelect(calendar, date, position);
-        }     
-        return false;
+
+       
     }
 });
 
@@ -73,12 +65,46 @@ FSCalendarDelegate.addMethod({
     }
 });
 
+FSCalendarDelegate.addMethod({
+    selector : 'maximumDateForCalendar:',
+    instance : true,
+    returnType : 'NSDate',
+    arguments : ['FSCalendar'],
+    callback : function(calendar) {
+        if (this.maximumDateForCalendar) {
+            return this.maximumDateForCalendar(calendar);
+        }
+    }
+});
+
+FSCalendarDelegate.addMethod({
+    selector : 'minimumDateForCalendar:',
+    instance : true,
+    returnType : 'NSDate',
+    arguments : ['FSCalendar'],
+    callback : function(calendar) {
+         
+        if (this.minimumDateForCalendar) {
+            return this.minimumDateForCalendar(calendar);
+        }
+    }
+});
 var delegate = new FSCalendarDelegate();
 
-delegate.shouldSelect = function(calendar, date, position) {
+delegate.shouldSelectDate = function(calendar, date, position) {
     Ti.API.info(date);
-    return false;
+    return true;
 };
+delegate.minimumDateForCalendar = function(calendar) {
+   Ti.API.info("minimumDateForCalendar");
+    return dateFormatter.dateFromString("2017-03-08");
+};
+
+delegate.maximumDateForCalendar = function(calendar) {
+   Ti.API.info("maximumDateForCalendar");
+    return dateFormatter.dateFromString("2017-11-08");
+};
+
 
 delegate.didDeselectDate = function(calendar, date) {
     Ti.API.info(date);
@@ -92,7 +118,10 @@ delegate.boundingRectWillChange = function(calendar, bounds, animated) {
     Ti.API.info(date);
 };
 
-calendar.setDelegate(delegate);
+calendar.delegate = delegate;
+calendar.dataSource = delegate;
+calendar.setToday(null);
+// Hide
 
 $.index.add(calendar);
 
