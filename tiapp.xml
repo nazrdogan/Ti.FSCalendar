@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <id>com.nextchapter.fscalendar</id>
+    <name>Ti.FSCalendar</name>
+    <version>1.0</version>
+    <publisher>nazirdogan</publisher>
+    <url/>
+    <description/>
+    <copyright>2017 by nazirdogan</copyright>
+    <icon>appicon.png</icon>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>e0746a4f-fb26-4438-9777-2f6e82d4d3bf</guid>
+    <property name="ti.ui.defaultunit" type="string">dp</property>
+    <property name="run-on-main-thread" type="bool">true</property>
+    <ios>
+        <enable-launch-screen-storyboard>true</enable-launch-screen-storyboard>
+        <use-app-thinning>true</use-app-thinning>
+        <use-jscore-framework>true</use-jscore-framework>
+        <plist>
+            <dict>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+            </dict>
+        </plist>
+    </ios>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="iphone">hyperloop</module>
+    </modules>
+    <deployment-targets>
+        <target device="android">false</target>
+        <target device="ipad">true</target>
+        <target device="iphone">true</target>
+        <target device="mobileweb">false</target>
+    </deployment-targets>
+    <sdk-version>6.0.4.GA</sdk-version>
+    <plugins>
+        <plugin version="1.0">ti.alloy</plugin>
+        <plugin>hyperloop</plugin>
+    </plugins>
+    <property name="appc-app-id" type="string">590d83b98d5eb11795aaab29</property>
+</ti:app>
