@@ -1,20 +1,18 @@
 var CGRectMake = require('CoreGraphics').CGRectMake,
     UIColor = require('UIKit/UIColor'),
     UIScreen = require('UIKit/UIScreen'),
-    NSDate = require('Foundation/NSDate');
-NSDateFormatter = require('Foundation/NSDateFormatter'),
-FSCalendar = require("FSCalendar/FSCalendar");
+    NSDate = require('Foundation/NSDate'),
+    NSDateFormatter = require('Foundation/NSDateFormatter'),
+    FSCalendar = require("FSCalendar/FSCalendar");
 
 var FSCalendarDelegate = Hyperloop.defineClass('FSCalendarDelegate', 'NSObject');
 
 var calendar = new FSCalendar();
-var bounds = UIScreen.mainScreen.bounds;
-var dateFormatter;
-dateFormatter = NSDateFormatter.alloc().init();
-dateFormatter.dateFormat = "yyyy-MM-dd";
-
-
 calendar.frame = CGRectMake(30, 50, 300, 300);
+
+var bounds = UIScreen.mainScreen.bounds;
+var dateFormatter = new NSDateFormatter();
+dateFormatter.dateFormat = "yyyy-MM-dd";
 
 FSCalendarDelegate.addMethod({
     selector : 'calendar:didDeselectDate:',
@@ -27,6 +25,7 @@ FSCalendarDelegate.addMethod({
         }
     }
 });
+
 FSCalendarDelegate.addMethod({
     selector : 'calendar:didSelectDate:',
     instance : true,
@@ -38,6 +37,7 @@ FSCalendarDelegate.addMethod({
         }
     }
 });
+
 FSCalendarDelegate.addMethod({
     selector : 'calendar:shouldSelectDate:atMonthPosition:',
     instance : true,
@@ -82,29 +82,29 @@ FSCalendarDelegate.addMethod({
     instance : true,
     returnType : 'NSDate',
     arguments : ['FSCalendar'],
-    callback : function(calendar) {
-         
+    callback : function(calendar) {      
         if (this.minimumDateForCalendar) {
             return this.minimumDateForCalendar(calendar);
         }
     }
 });
+
 var delegate = new FSCalendarDelegate();
 
 delegate.shouldSelectDate = function(calendar, date, position) {
     Ti.API.info(date);
     return true;
 };
+
 delegate.minimumDateForCalendar = function(calendar) {
-   Ti.API.info("minimumDateForCalendar");
+    Ti.API.info("minimumDateForCalendar");
     return dateFormatter.dateFromString("2017-03-08");
 };
 
 delegate.maximumDateForCalendar = function(calendar) {
-   Ti.API.info("maximumDateForCalendar");
+    Ti.API.info("maximumDateForCalendar");
     return dateFormatter.dateFromString("2017-11-08");
 };
-
 
 delegate.didDeselectDate = function(calendar, date) {
     Ti.API.info(date);
@@ -124,5 +124,4 @@ calendar.setToday(null);
 // Hide
 
 $.index.add(calendar);
-
 $.index.open();
