@@ -60,10 +60,9 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>6.0.4.GA</sdk-version>
+    <sdk-version>7.5.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
-        <plugin>hyperloop</plugin>
     </plugins>
     <property name="appc-app-id" type="string">590d83b98d5eb11795aaab29</property>
 </ti:app>

@@ -1,5 +1,6 @@
 <Alloy>
 	<Window class="container">
-	
+	 <Button onClick="setWeek">SET WEEK</Button>
+	 <Button bottom="100" onClick="setMonth">SET Month</Button>
 	</Window>
 </Alloy>

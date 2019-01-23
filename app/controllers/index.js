@@ -50,7 +50,7 @@ FSCalendarDelegate.addMethod({
             return this.shouldSelectDate(calendar, date, position);
         }
 
-       
+
     }
 });
 
@@ -82,7 +82,7 @@ FSCalendarDelegate.addMethod({
     instance : true,
     returnType : 'NSDate',
     arguments : ['FSCalendar'],
-    callback : function(calendar) {      
+    callback : function(calendar) {
         if (this.minimumDateForCalendar) {
             return this.minimumDateForCalendar(calendar);
         }
@@ -115,8 +115,16 @@ delegate.didSelectDate = function(calendar, date) {
 };
 
 delegate.boundingRectWillChange = function(calendar, bounds, animated) {
-    Ti.API.info(date);
+    Ti.API.info(calendar);
 };
+
+
+function setWeek(){
+    calendar.setScope(FSCalendar.FSCalendarScopeWeek,true);
+}
+function setMonth(){
+    calendar.setScope(FSCalendar.FSCalendarScopeMonth,true);
+}
 
 calendar.delegate = delegate;
 calendar.dataSource = delegate;
