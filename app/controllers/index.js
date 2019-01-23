@@ -89,7 +89,29 @@ FSCalendarDelegate.addMethod({
     }
 });
 
+FSCalendarDelegate.addMethod({
+    selector : 'calendarCurrentPageDidChange:',
+    instance : true,
+    arguments : ['FSCalendar'],
+    callback : function(calendar) {
+        Ti.API.info("calendarCurrentPageDidChange");
+
+        if (this.calendarCurrentPageDidChange) {
+            return this.calendarCurrentPageDidChange(calendar);
+        }
+
+       
+    }
+});
+
 var delegate = new FSCalendarDelegate();
+
+delegate.calendarCurrentPageDidChange = function(calendar)
+{
+	Ti.API.info("calendarCurrentPageDidChange");
+	startDate = dateFormatter.stringFromDate(calendar.currentPage);
+	Ti.API.info(startDate);
+}
 
 delegate.shouldSelectDate = function(calendar, date, position) {
     Ti.API.info(date);
